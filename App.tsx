@@ -24,6 +24,14 @@ export default function App() {
         client.devToken("vadim")
       );
       console.log("User connected");
+
+      // create a channel
+
+      const channel = client.channel("messaging", "notjustdev", {
+        name: "notJust.dev",
+      });
+
+      await channel.watch();
     };
 
     connectUser();
