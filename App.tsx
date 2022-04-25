@@ -23,9 +23,12 @@ export default function App() {
         },
         client.devToken("vadim")
       );
+      console.log("User connected");
     };
 
     connectUser();
+
+    return () => client.disconnectUser();
   }, []);
 
   if (!isLoadingComplete) {
