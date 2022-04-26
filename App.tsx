@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Text } from "react-native";
 import { StreamChat } from "stream-chat";
 import { OverlayProvider, Chat, ChannelList } from "stream-chat-expo";
 
@@ -46,7 +47,7 @@ export default function App() {
   }, []);
 
   const onChannelPressed = (channel) => {
-    console.log("channel", channel);
+    // console.log("channel", channel);
     setSelectedChannel(channel);
   };
 
@@ -57,7 +58,11 @@ export default function App() {
       <SafeAreaProvider>
         <OverlayProvider>
           <Chat client={client}>
-            <ChannelList onSelect={onChannelPressed} />
+            {selectedChannel ? (
+              <Text>Channel Page</Text>
+            ) : (
+              <ChannelList onSelect={onChannelPressed} />
+            )}
           </Chat>
         </OverlayProvider>
       </SafeAreaProvider>
