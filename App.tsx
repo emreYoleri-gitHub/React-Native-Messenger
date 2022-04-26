@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StreamChat } from "stream-chat";
-import { OverlayProvider } from "stream-chat-expo";
+import { OverlayProvider, Chat, ChannelList } from "stream-chat-expo";
 
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
@@ -14,6 +14,9 @@ const client = StreamChat.getInstance(API_KEY);
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+
+  const [isReady, setIsReady] = useState(false);
+  const [selectedChannel, setSelectedChannel] = useState<any>(null);
   useEffect(() => {
     const connectUser = async () => {
       await client.connectUser(
@@ -28,11 +31,13 @@ export default function App() {
 
       // create a channel
 
-      const channel = client.channel("messaging", "notjustdev", {
-        name: "notJust.dev",
+      const channel = client.channel("messaging", "public", {
+        name: "Public Chat Room",
       });
 
       await channel.watch();
+
+      setIsReady(true);
     };
 
     connectUser();
@@ -40,14 +45,20 @@ export default function App() {
     return () => client.disconnectUser();
   }, []);
 
-  if (!isLoadingComplete) {
+  const onChannelPressed = (channel) => {
+    console.log("channel", channel);
+    setSelectedChannel(channel);
+  };
+
+  if (!isLoadingComplete || !isReady) {
     return null;
   } else {
     return (
       <SafeAreaProvider>
         <OverlayProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
+          <Chat client={client}>
+            <ChannelList onSelect={onChannelPressed} />
+          </Chat>
         </OverlayProvider>
       </SafeAreaProvider>
     );
