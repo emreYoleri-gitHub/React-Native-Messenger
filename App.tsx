@@ -9,6 +9,7 @@ import {
   ChannelList,
   Channel,
   MessageList,
+  MessageInput,
 } from "stream-chat-expo";
 
 import useCachedResources from "./hooks/useCachedResources";
@@ -67,6 +68,7 @@ export default function App() {
             {selectedChannel ? (
               <Channel channel={selectedChannel}>
                 <MessageList />
+                <MessageInput />
                 <Text
                   style={{ marginTop: 50 }}
                   onPress={() => setSelectedChannel(null)}
