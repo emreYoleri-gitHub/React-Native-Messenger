@@ -66,7 +66,11 @@ export default function App() {
         <OverlayProvider>
           <Chat client={client}>
             {selectedChannel ? (
-              <Channel channel={selectedChannel}>
+              <Channel
+                channel={selectedChannel}
+                // Message={(message) => <Text>{message.message.text}</Text>}
+                // * Custom Message Component
+              >
                 <MessageList />
                 <MessageInput />
                 <Text
