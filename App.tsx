@@ -3,7 +3,13 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text } from "react-native";
 import { StreamChat } from "stream-chat";
-import { OverlayProvider, Chat, ChannelList, Channel } from "stream-chat-expo";
+import {
+  OverlayProvider,
+  Chat,
+  ChannelList,
+  Channel,
+  MessageList,
+} from "stream-chat-expo";
 
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
@@ -60,6 +66,7 @@ export default function App() {
           <Chat client={client}>
             {selectedChannel ? (
               <Channel channel={selectedChannel}>
+                <MessageList />
                 <Text
                   style={{ marginTop: 50 }}
                   onPress={() => setSelectedChannel(null)}
